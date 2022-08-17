@@ -36,15 +36,13 @@ exports.getAds = async (req, res, next) => {
 
     const keywordToSearch = new RegExp(keywords, "ig");
 
-    const adsMatchingKeyword = await Ad.find()
-      .find({
-        $or: [
-          { primaryText: { $regex: keywordToSearch } },
-          { headline: { $regex: keywordToSearch } },
-          { description: { $regex: keywordToSearch } },
-        ],
-      })
-      .populate("companyId");
+    const adsMatchingKeyword = await Ad.find({
+      $or: [
+        { primaryText: { $regex: keywordToSearch } },
+        { headline: { $regex: keywordToSearch } },
+        { description: { $regex: keywordToSearch } },
+      ],
+    }).populate("companyId");
 
     // const adsMatchingKeyword = await Ad.find({
     //   $text: { $search: keywords },
